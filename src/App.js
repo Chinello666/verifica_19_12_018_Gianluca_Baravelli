@@ -1,28 +1,61 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './css/App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Body from './components/body.js';
+import Footer from './components/footer.js';
+import SocialPost from './components/socialPost.js';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink
+} from 'reactstrap';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      post: [],
+      loader: false
+    };
+    // this.dataFetch();
+  }
+
+  componentDidMount() {
+    this.setState({ loader: true });
+    this.dataFetch();
+    this.setState({ loader: false });
+  }
+
+  dataFetch() {
+    fetch("https://jsonplaceholder.typicode.com/photos")
+      .then(response => response.json())
+      .then(json =>
+        this.setState({
+          post: json
+        })
+      );
+  }
+
   render() {
+    const { loader, post } = this.state
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <h1>Social Post Verifica</h1>
+        
+          <SocialPost />
+          <ul>
+            {
+            }
+          </ul>
       </div>
-    );
-  }
-}
-
-export default App;
+        );
+      }
+    }
+    
+    
+    
+    export default App;
